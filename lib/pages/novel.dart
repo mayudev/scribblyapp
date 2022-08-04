@@ -5,6 +5,7 @@ import 'package:scribbly/utils/chapters.dart';
 import 'package:scribbly/utils/details.dart';
 import 'package:scribbly/widgets/details.dart';
 import 'package:scribbly/widgets/error_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NovelPage extends StatefulWidget {
   const NovelPage({Key? key, required this.title, required this.id})
@@ -31,7 +32,17 @@ class _NovelPageState extends State<NovelPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
+      appBar: AppBar(
+        title: Text(widget.title),
+        actions: [
+          IconButton(
+              onPressed: () {
+                _openBrowser();
+              },
+              tooltip: 'Open in browser',
+              icon: const Icon(Icons.public))
+        ],
+      ),
       body: FutureBuilder(
         future: _getNovelData(),
         builder: (context, snapshot) {
@@ -47,5 +58,10 @@ class _NovelPageState extends State<NovelPage> {
         },
       ),
     );
+  }
+
+  Future<void> _openBrowser() async {
+    final url = 'https://www.scribblehub.com/series/${widget.id}';
+    await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
   }
 }
