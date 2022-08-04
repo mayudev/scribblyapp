@@ -7,7 +7,7 @@ ThemeData buildTheme() {
   SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(statusBarColor: primary));
 
-  var base = ThemeData();
+  var base = ThemeData(fontFamily: 'Nunito');
 
   return base.copyWith(
     brightness: Brightness.light,
