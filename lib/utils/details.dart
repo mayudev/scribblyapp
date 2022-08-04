@@ -4,8 +4,6 @@ import 'package:scribbly/types/novel.dart';
 import 'package:scribbly/utils/scraper.dart';
 import 'package:universal_html/html.dart';
 
-var baseUrl = 'https://www.scribblehub.com/series/';
-
 Future<NovelDetails> getNovelDetails(int novelId) async {
   final page = await scrapePage(baseUrl + novelId.toString());
 

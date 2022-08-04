@@ -3,6 +3,7 @@ import 'package:universal_html/html.dart';
 import 'package:universal_html/parsing.dart';
 
 var userAgent = 'Scribbly/0.1';
+var baseUrl = 'https://www.scribblehub.com/series/';
 
 Future<HtmlDocument> scrapePage(String url) async {
   var uri = Uri.parse(url);
