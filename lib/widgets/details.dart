@@ -1,12 +1,25 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
+import 'package:scribbly/types/chapter.dart';
 import 'package:scribbly/types/novel.dart';
 
 const cardMargin = EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0);
 
-class Details extends StatelessWidget {
+class Details extends StatefulWidget {
   const Details({Key? key, required this.data}) : super(key: key);
 
   final NovelData data;
+
+  @override
+  State<Details> createState() => _DetailsState();
+}
+
+class _DetailsState extends State<Details> {
+  bool reversed = false;
+
+  UnmodifiableListView<Chapter> get chapterList => UnmodifiableListView(
+      reversed ? widget.data.chapters.reversed : widget.data.chapters);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +37,7 @@ class Details extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
                     child: Image.network(
-                      data.details.coverUrl,
+                      widget.data.details.coverUrl,
                       height: 220.0,
                     ),
                   ),
@@ -34,13 +47,13 @@ class Details extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          data.details.title,
+                          widget.data.details.title,
                           style: const TextStyle(
                             fontSize: 22.0,
                           ),
                         ),
                         Text(
-                          data.details.author.username,
+                          widget.data.details.author.username,
                           style: const TextStyle(
                             fontSize: 14.0,
                             fontWeight: FontWeight.w300,
@@ -71,7 +84,7 @@ class Details extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(12.0),
             child: SelectableText(
-              data.details.details.trim(),
+              widget.data.details.details.trim(),
               style: const TextStyle(height: 1.5),
             ),
           ),
@@ -103,7 +116,7 @@ class Details extends StatelessWidget {
   }
 
   List<Widget> _genreChips() {
-    return data.details.genres
+    return widget.data.details.genres
         .map((genre) => _genreChip(
               label: Text(genre),
             ))
@@ -111,7 +124,7 @@ class Details extends StatelessWidget {
   }
 
   List<Widget> _tagChips() {
-    return data.details.tags
+    return widget.data.details.tags
         .map((genre) => _genreChip(
               label: Text(genre),
             ))
@@ -136,14 +149,22 @@ class Details extends StatelessWidget {
         margin: cardMargin,
         child: Column(
           children: [
-            _cardHeading(Icons.bookmark, 'Chapters'),
+            _cardHeading(Icons.bookmark, 'Chapters', trailing: [
+              IconButton(
+                onPressed: () {
+                  _toggleReverse();
+                },
+                icon: const Icon(Icons.sort),
+                tooltip: 'Toggle reverse',
+              )
+            ]),
             ListView.builder(
               shrinkWrap: true,
               physics: const ClampingScrollPhysics(),
-              itemCount: data.chapters.length,
+              itemCount: chapterList.length,
               itemBuilder: (context, index) => ListTile(
-                title: Text(data.chapters[index].title ?? 'Unknown'),
-                subtitle: Text(data.chapters[index].publishedDate ?? 'Unknown'),
+                title: Text(chapterList[index].title ?? 'Unknown'),
+                subtitle: Text(chapterList[index].publishedDate ?? 'Unknown'),
                 onTap: () {},
               ),
             )
@@ -151,10 +172,20 @@ class Details extends StatelessWidget {
         ));
   }
 
-  Widget _cardHeading(IconData icon, String text) {
+  void _toggleReverse() {
+    setState(() {
+      reversed = !reversed;
+    });
+  }
+
+  Widget _cardHeading(IconData icon, String text,
+      {List<Widget> trailing = const []}) {
     return ListTile(
       leading: Icon(icon),
       title: Text(text),
+      trailing: Wrap(
+        children: trailing,
+      ),
     );
   }
 }
