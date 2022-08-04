@@ -1,4 +1,12 @@
 import 'package:scribbly/types/author.dart';
+import 'package:scribbly/types/chapter.dart';
+
+class NovelData {
+  final NovelDetails details;
+  final List<Chapter> chapters;
+
+  NovelData(this.details, this.chapters);
+}
 
 class NovelDetails {
   final String title;

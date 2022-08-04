@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:scribbly/types/chapter.dart';
 import 'package:scribbly/types/novel.dart';
+import 'package:scribbly/utils/chapters.dart';
 import 'package:scribbly/utils/details.dart';
+import 'package:scribbly/widgets/details.dart';
 import 'package:scribbly/widgets/error_screen.dart';
 
 class NovelPage extends StatefulWidget {
@@ -15,42 +18,32 @@ class NovelPage extends StatefulWidget {
 }
 
 class _NovelPageState extends State<NovelPage> {
-  int _currentIndex = 0;
+  Future<NovelData> _getNovelData() async {
+    final result = await Future.wait(
+        [getNovelDetails(widget.id), getChapterList(widget.id)]);
+
+    return NovelData(
+      result[0] as NovelDetails,
+      result[1] as List<Chapter>,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(widget.title)),
       body: FutureBuilder(
-        future: parseNovelDetails(widget.id),
+        future: _getNovelData(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return const Center(child: ErrorScreen());
           } else if (snapshot.hasData) {
-            var data = snapshot.data as NovelDetails;
+            var data = snapshot.data as NovelData;
 
-            // TODO animation
-            if (_currentIndex == 0) {
-              return Text(data.details);
-            } else {
-              return Text('aa');
-            }
+            return Details(data: data);
           } else {
             return const Center(child: CircularProgressIndicator());
           }
-        },
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Overview'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.library_books), label: 'Chapters')
-        ],
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
         },
       ),
     );

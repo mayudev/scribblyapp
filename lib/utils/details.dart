@@ -6,7 +6,7 @@ import 'package:universal_html/html.dart';
 
 var baseUrl = 'https://www.scribblehub.com/series/';
 
-Future<NovelDetails> parseNovelDetails(int novelId) async {
+Future<NovelDetails> getNovelDetails(int novelId) async {
   final page = await scrapePage(baseUrl + novelId.toString());
 
   final title = page.querySelector('.fic_title');

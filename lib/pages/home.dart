@@ -11,7 +11,7 @@ class HomePage extends StatelessWidget {
       body: Center(
         child: TextButton(
             onPressed: () {
-              _openNovelPage(context, "Test Novel", 123);
+              _openNovelPage(context, "Test Novel", 310493);
             },
             child: const Text('example novel page')),
       ),
