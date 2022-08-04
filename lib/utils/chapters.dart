@@ -19,8 +19,9 @@ List<Chapter> parseChapters(Iterable<Element> elements) {
     final order = orderAttr != null ? int.tryParse(orderAttr) : null;
 
     final title = element.querySelector('A')?.text;
+    final published = element.querySelector('.fic_date_pub')?.text;
 
-    return Chapter(order: order, title: title);
+    return Chapter(order: order, title: title, publishedDate: published);
   });
 
   return chapters.toList();

@@ -42,6 +42,7 @@ class Details extends StatelessWidget {
               ],
             )),
         _synopsisCard(),
+        _chaptersCard(),
       ],
     );
   }
@@ -49,13 +50,45 @@ class Details extends StatelessWidget {
   Card _synopsisCard() {
     return Card(
       margin: cardMargin,
-      child: Padding(
-        padding: EdgeInsets.all(12.0),
-        child: SelectableText(
-          data.details.details.trim(),
-          style: const TextStyle(height: 1.5),
-        ),
+      child: Column(
+        children: [
+          _cardHeading(Icons.info, 'Synopsis'),
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: SelectableText(
+              data.details.details.trim(),
+              style: const TextStyle(height: 1.5),
+            ),
+          ),
+        ],
       ),
+    );
+  }
+
+  Card _chaptersCard() {
+    return Card(
+        margin: cardMargin,
+        child: Column(
+          children: [
+            _cardHeading(Icons.bookmark, 'Chapters'),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const ClampingScrollPhysics(),
+              itemCount: data.chapters.length,
+              itemBuilder: (context, index) => ListTile(
+                title: Text(data.chapters[index].title ?? 'Unknown'),
+                subtitle: Text(data.chapters[index].publishedDate ?? 'Unknown'),
+                onTap: () {},
+              ),
+            )
+          ],
+        ));
+  }
+
+  Widget _cardHeading(IconData icon, String text) {
+    return ListTile(
+      leading: Icon(icon),
+      title: Text(text),
     );
   }
 }

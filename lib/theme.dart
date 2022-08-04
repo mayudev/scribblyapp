@@ -5,7 +5,7 @@ ThemeData buildTheme() {
   const primary = Color(0xff684b77);
 
   SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(statusBarColor: primary));
+      const SystemUiOverlayStyle(statusBarColor: primary));
 
   var base = ThemeData(fontFamily: 'Nunito');
 
@@ -13,7 +13,7 @@ ThemeData buildTheme() {
     brightness: Brightness.light,
     colorScheme: const ColorScheme.light().copyWith(
       primary: primary,
-      secondary: Colors.red[200]!,
+      secondary: Colors.purple[800]!,
     ),
     primaryColor: primary,
     appBarTheme: const AppBarTheme().copyWith(
