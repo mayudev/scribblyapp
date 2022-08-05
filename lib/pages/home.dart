@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scribbly/pages/novel.dart';
 import 'package:scribbly/pages/search.dart';
+import 'package:scribbly/pages/settings.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -25,6 +26,16 @@ class _HomePageState extends State<HomePage> with RestorationMixin {
             },
             icon: const Icon(Icons.search),
             tooltip: 'Search',
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const SettingsPage()));
+            },
+            icon: const Icon(Icons.settings),
+            tooltip: 'Settings',
           )
         ],
       ),
