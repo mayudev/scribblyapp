@@ -8,31 +8,47 @@ class NovelData {
   NovelData(this.details, this.chapters);
 }
 
-class NovelDetails {
+class Novel {
   final String title;
-  final String details;
   final String coverUrl;
+
+  Novel({required this.title, required this.coverUrl});
+}
+
+class NovelResult extends Novel {
   final String views;
-  final String favorites;
-  final String chapters;
   final String rating;
+  final String chapters;
+
+  final Author author;
+
+  NovelResult(
+      {required super.title,
+      required super.coverUrl,
+      required this.views,
+      required this.rating,
+      required this.author,
+      required this.chapters});
+}
+
+class NovelDetails extends NovelResult {
+  final String details;
+  final String favorites;
 
   final List<String> genres;
   final List<String> tags;
 
-  final Author author;
-
   NovelDetails(
-      {required this.title,
+      {required super.title,
       required this.details,
-      required this.coverUrl,
-      required this.views,
+      required super.coverUrl,
+      required super.views,
       required this.favorites,
-      required this.chapters,
-      required this.rating,
+      required super.chapters,
+      required super.rating,
       required this.genres,
       required this.tags,
-      required this.author});
+      required super.author});
 
   @override
   String toString() {

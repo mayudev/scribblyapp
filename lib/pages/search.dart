@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:scribbly/types/misc.dart';
+import 'package:scribbly/types/novel.dart';
 import 'package:scribbly/utils/search.dart';
 import 'package:scribbly/widgets/error_screen.dart';
+import 'package:scribbly/widgets/result_card.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -11,7 +13,7 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  List<String> results = [];
+  List<NovelResult> results = [];
   LoadingState state = LoadingState.idle;
 
   @override
@@ -55,9 +57,8 @@ class _SearchPageState extends State<SearchPage> {
           } else {
             return ListView.builder(
               itemCount: results.length,
-              itemBuilder: ((context, index) => ListTile(
-                    title: Text(results[index]),
-                  )),
+              itemBuilder: ((context, index) =>
+                  ResultCard(data: results[index])),
             );
           }
         } else if (state == LoadingState.loading) {
