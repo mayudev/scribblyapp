@@ -18,7 +18,11 @@ List<NovelResult> parseResults(Iterable<Element> elements) {
 }
 
 NovelResult parseResult(Element element) {
-  final title = element.querySelector('.search_title a')?.text ?? 'Unknown';
+  final titleElement = element.querySelector('.search_title a');
+  final id = getNovelId(titleElement?.getAttribute('href'));
+
+  final title = titleElement?.text ?? 'Unknown';
+
   final cover = element.querySelector('img');
 
   final coverUrl = cover?.getAttribute('src') ?? 'unknown';
@@ -37,6 +41,7 @@ NovelResult parseResult(Element element) {
       username: authorElement?.text ?? 'Unknown');
 
   return NovelResult(
+      id: id,
       title: title,
       coverUrl: coverUrl,
       views: views,

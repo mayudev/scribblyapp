@@ -39,6 +39,7 @@ Future<NovelDetails> getNovelDetails(int novelId) async {
   final author = parseAuthor(authorNameElement);
 
   final details = NovelDetails(
+    id: novelId,
     title: title!.text!,
     details: synopsis!.text!,
     coverUrl: coverUrl,

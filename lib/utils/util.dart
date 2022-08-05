@@ -5,3 +5,12 @@ String trim(String? input) {
 String removeParenthesis(String? input) {
   return input?.replaceAll('(', '').replaceAll(')', '') ?? 'Unknown';
 }
+
+int getNovelId(String? url) {
+  if (url == null) return 0;
+
+  final uri = Uri.parse(url);
+  final id = int.parse(uri.pathSegments[1]);
+
+  return id;
+}
