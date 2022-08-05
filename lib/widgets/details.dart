@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:scribbly/pages/reader.dart';
 import 'package:scribbly/types/chapter.dart';
 import 'package:scribbly/types/novel.dart';
 
@@ -165,7 +166,9 @@ class _DetailsState extends State<Details> {
               itemBuilder: (context, index) => ListTile(
                 title: Text(chapterList[index].title ?? 'Unknown'),
                 subtitle: Text(chapterList[index].publishedDate ?? 'Unknown'),
-                onTap: () {},
+                onTap: () {
+                  _pushReader(chapterList[index]);
+                },
               ),
             )
           ],
@@ -176,6 +179,13 @@ class _DetailsState extends State<Details> {
     setState(() {
       reversed = !reversed;
     });
+  }
+
+  void _pushReader(Chapter chapter) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ReaderPage(chapter: chapter)),
+    );
   }
 
   Widget _cardHeading(IconData icon, String text,

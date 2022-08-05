@@ -14,3 +14,10 @@ int getNovelId(String? url) {
 
   return id;
 }
+
+int getChapterId(String url) {
+  final uri = Uri.parse(url);
+  final id = int.parse(uri.pathSegments[3]);
+
+  return id;
+}
