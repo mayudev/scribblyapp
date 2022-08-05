@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:scribbly/types/misc.dart';
 import 'package:scribbly/utils/search.dart';
+import 'package:scribbly/widgets/error_screen.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -10,6 +12,7 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   List<String> results = [];
+  LoadingState state = LoadingState.idle;
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +23,21 @@ class _SearchPageState extends State<SearchPage> {
           title: TextField(
             autofocus: true,
             onSubmitted: (query) async {
-              final resp = await getSearchResults(query);
               setState(() {
-                results = resp;
+                state = LoadingState.loading;
               });
+
+              try {
+                final resp = await getSearchResults(query);
+                setState(() {
+                  results = resp;
+                  state = LoadingState.idle;
+                });
+              } catch (e) {
+                setState(() {
+                  state = LoadingState.error;
+                });
+              }
             },
             decoration: const InputDecoration(
               hintText: 'Search...',
@@ -34,11 +48,24 @@ class _SearchPageState extends State<SearchPage> {
           ),
         ),
       ),
-      body: ListView.builder(
-        itemCount: results.length,
-        itemBuilder: ((context, index) =>
-            ListTile(title: Text(results[index]))),
-      ),
+      body: Builder(builder: (context) {
+        if (state == LoadingState.idle) {
+          if (results.isEmpty) {
+            return const Center(child: Text('Type'));
+          } else {
+            return ListView.builder(
+              itemCount: results.length,
+              itemBuilder: ((context, index) => ListTile(
+                    title: Text(results[index]),
+                  )),
+            );
+          }
+        } else if (state == LoadingState.loading) {
+          return const Center(child: CircularProgressIndicator());
+        } else {
+          return const Center(child: ErrorScreen());
+        }
+      }),
     );
   }
 }
