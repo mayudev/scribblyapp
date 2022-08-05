@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:scribbly/types/novel.dart';
 
 class ResultCard extends StatelessWidget {
@@ -15,13 +13,16 @@ class ResultCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8.0),
-            child: Image.network(
-              data.coverUrl,
-              height: 110.0,
-              width: 81.0,
-              fit: BoxFit.cover,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: Image.network(
+                data.coverUrl,
+                height: 130.0,
+                width: 81.0,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           Flexible(
