@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="io.github.mayudev.scribbly">
+    <uses-permission android:name="android.permission.INTERNET" /> 
    <application
         android:label="scribbly"
         android:name="${applicationName}"
@@ -33,6 +34,7 @@
             android:value="2" />
        
     </application>
+    
     <queries>
         <intent>
             <action android:name="android.intent.action.VIEW" />
