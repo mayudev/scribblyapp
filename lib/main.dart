@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:scribbly/models/library.dart';
 import 'package:scribbly/models/prefs.dart';
 import 'package:scribbly/pages/home.dart';
 import 'package:scribbly/theme.dart';
@@ -15,7 +16,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (context) => PrefsModel())],
+      providers: [
+        ChangeNotifierProvider(create: (context) => PrefsModel()),
+        ChangeNotifierProvider(create: (context) => LibraryModel())
+      ],
       child: Consumer<PrefsModel>(
           builder: (context, value, child) {
             return MaterialApp(

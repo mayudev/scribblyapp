@@ -1,6 +1,8 @@
 import 'dart:collection';
+import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
+import 'package:scribbly/models/library.dart';
 import 'package:scribbly/pages/reader.dart';
 import 'package:scribbly/types/chapter.dart';
 import 'package:scribbly/types/novel.dart';
@@ -61,8 +63,8 @@ class _DetailsState extends State<Details> {
                           ),
                         ),
                         ElevatedButton(
-                            onPressed: () {},
-                            child: const Text('Start reading'))
+                            onPressed: () => _libraryToggle(),
+                            child: const Text('Add to library'))
                       ],
                     ),
                   ),
@@ -73,6 +75,12 @@ class _DetailsState extends State<Details> {
         ],
       ),
     );
+  }
+
+  void _libraryToggle() {
+    var library = context.read<LibraryModel>();
+
+    library.add(widget.data.details);
   }
 
   Card _synopsisCard() {

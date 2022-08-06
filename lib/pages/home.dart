@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scribbly/pages/library.dart';
 import 'package:scribbly/pages/novel.dart';
 import 'package:scribbly/pages/search.dart';
 import 'package:scribbly/pages/settings.dart';
@@ -49,14 +50,7 @@ class _HomePageState extends State<HomePage> with RestorationMixin {
 
   List<Widget> _pages() {
     return [
-      Center(
-        child: TextButton(
-          onPressed: () {
-            _openNovelPage(context, "Test Novel", 310493);
-          },
-          child: const Text('open'),
-        ),
-      ),
+      const LibraryPage(),
       const Text('page 2'),
     ];
   }
