@@ -26,9 +26,9 @@ class ChapterRenderer extends StatelessWidget {
     });
 
     return DefaultTextStyle(
-      style: const TextStyle(
+      style: TextStyle(
         fontFamily: 'Nunito',
-        color: Color(0xFF333333),
+        color: Theme.of(context).textTheme.bodyMedium!.color,
         fontSize: 18.0,
       ),
       child: SingleChildScrollView(

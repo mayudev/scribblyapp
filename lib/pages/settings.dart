@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scribbly/models/prefs.dart';
 import 'package:settings_ui/settings_ui.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -25,6 +24,7 @@ class _SettingsPageState extends State<SettingsPage> {
         SettingsSection(tiles: [
           SettingsTile.switchTile(
             initialValue: prefs.darkMode,
+            activeSwitchColor: Theme.of(context).colorScheme.primary,
             onToggle: (newValue) {
               setState(() {
                 prefs.darkMode = !prefs.darkMode;
