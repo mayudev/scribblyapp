@@ -11,37 +11,93 @@ class ReaderPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(chapter.title ?? 'Chapter'),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.public),
-            tooltip: 'Open in web browser',
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.settings),
-            tooltip: 'Reader settings',
-          )
-        ],
-      ),
-      body: FutureBuilder(
+    return FutureBuilder(
         future: _getChapterData(),
         builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return const Center(child: ErrorScreen());
-          } else if (snapshot.hasData) {
-            final data = snapshot.data as ChapterData;
+          return Scaffold(
+            appBar: AppBar(
+              title: _renderTitle(snapshot.data),
+              actions: [
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.public),
+                  tooltip: 'Open in web browser',
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.settings),
+                  tooltip: 'Reader settings',
+                )
+              ],
+            ),
+            body: Builder(
+              builder: (context) {
+                if (snapshot.hasError) {
+                  return const Center(child: ErrorScreen());
+                } else if (snapshot.hasData) {
+                  final data = snapshot.data as ChapterData;
 
-            return ChapterRenderer(nodes: data.rawContents);
-          } else {
-            return const Center(child: CircularProgressIndicator());
-          }
-        },
+                  return _readerPage(context, data);
+                } else {
+                  return const Center(child: CircularProgressIndicator());
+                }
+              },
+            ),
+          );
+        });
+  }
+
+  Widget _renderTitle(Object? data) {
+    try {
+      data = data as ChapterData;
+      return Text(data.title ?? 'Chapter');
+    } catch (e) {
+      return const Text('Chapter');
+    }
+  }
+
+  Widget _readerPage(BuildContext context, ChapterData data) {
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ChapterRenderer(nodes: data.rawContents),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: IconButton(
+                  onPressed: data.previousChapterId == null
+                      ? null
+                      : () => _openChapter(context, data.previousChapterId!),
+                  icon: const Icon(Icons.chevron_left),
+                  tooltip: 'Previous chapter',
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: IconButton(
+                  onPressed: data.nextChapterId == null
+                      ? null
+                      : () => _openChapter(context, data.nextChapterId!),
+                  icon: const Icon(Icons.chevron_right),
+                  tooltip: 'Next chapter',
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
+  }
+
+  void _openChapter(BuildContext context, int id) {
+    final newChapter = Chapter(id: id);
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ReaderPage(chapter: newChapter)));
   }
 
   Future _getChapterData() {

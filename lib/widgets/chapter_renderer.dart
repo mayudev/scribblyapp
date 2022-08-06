@@ -31,14 +31,12 @@ class ChapterRenderer extends StatelessWidget {
         color: Theme.of(context).textTheme.bodyMedium!.color,
         fontSize: 18.0,
       ),
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: paragraphs.toList(),
-          ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: paragraphs.toList(),
         ),
       ),
     );

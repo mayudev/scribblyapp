@@ -6,11 +6,7 @@ class Chapter {
   String? title;
   String? publishedDate;
 
-  Chapter(
-      {required this.id,
-      required this.order,
-      required this.title,
-      required this.publishedDate});
+  Chapter({required this.id, this.order, this.title, this.publishedDate});
 
   @override
   String toString() {
@@ -21,11 +17,16 @@ class Chapter {
 class ChapterData extends Chapter {
   List<Node> rawContents;
 
+  int? previousChapterId;
+  int? nextChapterId;
+
   ChapterData({
     required super.id,
     required super.order,
     required super.title,
     required super.publishedDate,
     required this.rawContents,
+    required this.previousChapterId,
+    required this.nextChapterId,
   });
 }
