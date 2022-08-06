@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:scribbly/models/prefs.dart';
 import 'package:scribbly/pages/home.dart';
 import 'package:scribbly/theme.dart';
 
@@ -12,10 +14,19 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'ScribblyApp',
-      theme: buildTheme(),
-      home: const HomePage(),
+    return MultiProvider(
+      providers: [ChangeNotifierProvider(create: (context) => PrefsModel())],
+      child: Consumer<PrefsModel>(
+          builder: (context, value, child) {
+            return MaterialApp(
+              title: 'ScribblyApp',
+              theme: buildTheme(),
+              darkTheme: buildDarkTheme(),
+              themeMode: value.darkMode ? ThemeMode.dark : ThemeMode.light,
+              home: child,
+            );
+          },
+          child: const HomePage()),
     );
   }
 }

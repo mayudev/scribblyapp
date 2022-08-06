@@ -22,3 +22,25 @@ ThemeData buildTheme() {
             const TextStyle(fontWeight: FontWeight.w400, fontSize: 20.0)),
   );
 }
+
+ThemeData buildDarkTheme() {
+  const primary = Color.fromARGB(255, 204, 150, 231);
+
+  var base = ThemeData.dark();
+
+  final textTheme = base.textTheme.apply(fontFamily: 'Nunito');
+
+  return base.copyWith(
+    textTheme: textTheme,
+    primaryTextTheme: textTheme,
+    brightness: Brightness.dark,
+    backgroundColor: Colors.black,
+    scaffoldBackgroundColor: const Color.fromARGB(255, 33, 33, 33),
+    cardColor: const Color.fromARGB(255, 45, 45, 45),
+    colorScheme: const ColorScheme.dark().copyWith(
+      background: Colors.black,
+      primary: primary,
+      secondary: primary,
+    ),
+  );
+}
