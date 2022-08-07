@@ -33,43 +33,7 @@ class _DetailsState extends State<Details> {
       radius: const Radius.circular(8.0),
       child: ListView(
         children: [
-          Card(
-              margin: cardMargin,
-              child: Column(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0),
-                    child: Image.network(
-                      widget.data.details.coverUrl,
-                      height: 220.0,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.data.details.title,
-                          style: const TextStyle(
-                            fontSize: 22.0,
-                          ),
-                        ),
-                        Text(
-                          widget.data.details.author.username,
-                          style: const TextStyle(
-                            fontSize: 14.0,
-                            fontWeight: FontWeight.w300,
-                          ),
-                        ),
-                        ElevatedButton(
-                            onPressed: () => _libraryToggle(),
-                            child: const Text('Add to library'))
-                      ],
-                    ),
-                  ),
-                ],
-              )),
+          _titleCard(),
           _synopsisCard(),
           _chaptersCard(),
         ],
@@ -77,10 +41,100 @@ class _DetailsState extends State<Details> {
     );
   }
 
-  void _libraryToggle() {
-    var library = context.read<LibraryModel>();
+  Card _titleCard() {
+    return Card(
+        margin: cardMargin,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: Image.network(
+                      widget.data.details.coverUrl,
+                      width: 120.0,
+                    ),
+                  ),
+                ),
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 16.0, horizontal: 4.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.data.details.title,
+                          style: const TextStyle(
+                            fontSize: 20.0,
+                          ),
+                        ),
+                        Text(
+                          widget.data.details.author.username,
+                          style: const TextStyle(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w300,
+                          ),
+                        ),
+                        Text(
+                          '${widget.data.details.views} views\n${widget.data.details.chapters} chapters',
+                          style: const TextStyle(
+                            fontSize: 13.0,
+                            height: 1.5,
+                            fontWeight: FontWeight.w300,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Padding(padding: const EdgeInsets.all(8.0), child: _actionRow())
+          ],
+        ));
+  }
 
+  Widget _actionRow() {
+    return Wrap(
+      spacing: 12.0,
+      children: [
+        _buildLibraryButton(),
+        OutlinedButton.icon(
+            onPressed: () {},
+            icon: const Icon(Icons.book),
+            label: const Text('Start reading')),
+      ],
+    );
+  }
+
+  Widget _buildLibraryButton() {
+    var library = context.watch<LibraryModel>();
+
+    if (library.has(widget.data.details.id)) {
+      return ElevatedButton.icon(
+          onPressed: () => _libraryRemove(library),
+          icon: const Icon(Icons.remove),
+          label: const Text('In library'));
+    } else {
+      return OutlinedButton.icon(
+          onPressed: () => _libraryAdd(library),
+          icon: const Icon(Icons.add),
+          label: const Text('Add to library'));
+    }
+  }
+
+  void _libraryAdd(LibraryModel library) {
     library.add(widget.data.details);
+  }
+
+  void _libraryRemove(LibraryModel library) {
+    print('dl');
+    library.remove(widget.data.details);
   }
 
   Card _synopsisCard() {

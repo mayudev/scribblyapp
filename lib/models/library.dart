@@ -10,4 +10,19 @@ class LibraryModel extends ChangeNotifier {
     _novels.add(novel);
     notifyListeners();
   }
+
+  void remove(Novel novel) {
+    _novels.removeWhere((element) => element.id == novel.id);
+    print(_novels.length);
+    notifyListeners();
+  }
+
+  bool has(int novelId) {
+    try {
+      _novels.firstWhere((element) => element.id == novelId);
+      return true;
+    } on StateError {
+      return false;
+    }
+  }
 }
