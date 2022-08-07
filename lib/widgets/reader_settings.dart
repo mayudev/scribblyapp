@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:settings_ui/settings_ui.dart';
 
 class ReaderSettings extends StatelessWidget {
   const ReaderSettings({Key? key, required this.settings}) : super(key: key);
@@ -30,12 +29,27 @@ class ReaderSettings extends StatelessWidget {
           trailing: Text('${fontSize.toInt()}'),
         ),
         Slider(
-            min: 14.0,
-            max: 22.0,
-            value: fontSize,
-            onChanged: (value) {
-              settings.put('fontSize', value.round());
-            }),
+          min: 14.0,
+          max: 22.0,
+          value: fontSize,
+          onChanged: (value) {
+            settings.put('fontSize', value.round());
+          },
+        ),
+        ListTile(
+          leading: const Icon(Icons.font_download),
+          title: const Text('Font'),
+          trailing: DropdownButton(
+            onChanged: (val) {},
+            value: 'Nunito',
+            items: const [
+              DropdownMenuItem(
+                value: 'Nunito',
+                child: Text('Nunito'),
+              )
+            ],
+          ),
+        )
       ]),
     );
   }
