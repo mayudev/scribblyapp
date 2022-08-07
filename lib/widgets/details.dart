@@ -1,8 +1,7 @@
 import 'dart:collection';
-import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
-import 'package:scribbly/models/library.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:scribbly/pages/reader.dart';
 import 'package:scribbly/types/chapter.dart';
 import 'package:scribbly/types/novel.dart';
@@ -103,7 +102,9 @@ class _DetailsState extends State<Details> {
     return Wrap(
       spacing: 12.0,
       children: [
-        _buildLibraryButton(),
+        ValueListenableBuilder<Box>(
+            valueListenable: Hive.box('library').listenable(),
+            builder: (context, box, widget) => _buildLibraryButton(box)),
         OutlinedButton.icon(
             onPressed: () {
               _pushReader(widget.data.chapters[0]);
@@ -114,10 +115,10 @@ class _DetailsState extends State<Details> {
     );
   }
 
-  Widget _buildLibraryButton() {
-    var library = context.watch<LibraryModel>();
+  Widget _buildLibraryButton(Box library) {
+    final exists = library.containsKey(widget.data.details.id);
 
-    if (library.has(widget.data.details.id)) {
+    if (exists) {
       return ElevatedButton.icon(
           onPressed: () => _libraryRemove(library),
           icon: const Icon(Icons.remove),
@@ -130,15 +131,15 @@ class _DetailsState extends State<Details> {
     }
   }
 
-  void _libraryAdd(LibraryModel library) {
-    library.add(widget.data.details);
+  void _libraryAdd(Box library) {
+    library.put(widget.data.details.id, widget.data.details);
 
     ScaffoldMessenger.of(context)
         .showSnackBar(const SnackBar(content: Text('Novel added to library!')));
   }
 
-  void _libraryRemove(LibraryModel library) {
-    library.remove(widget.data.details);
+  void _libraryRemove(Box library) {
+    library.delete(widget.data.details.id);
 
     ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Novel removed from library!')));

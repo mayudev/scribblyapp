@@ -1,19 +1,28 @@
+import 'package:hive/hive.dart';
 import 'package:scribbly/types/author.dart';
 import 'package:scribbly/types/chapter.dart';
+
+part 'novel.g.dart';
+
+@HiveType(typeId: 1)
+class Novel {
+  @HiveField(0)
+  final int id;
+
+  @HiveField(1)
+  final String title;
+
+  @HiveField(2)
+  final String coverUrl;
+
+  Novel({required this.id, required this.title, required this.coverUrl});
+}
 
 class NovelData {
   final NovelDetails details;
   final List<Chapter> chapters;
 
   NovelData(this.details, this.chapters);
-}
-
-class Novel {
-  final int id;
-  final String title;
-  final String coverUrl;
-
-  Novel({required this.id, required this.title, required this.coverUrl});
 }
 
 class NovelResult extends Novel {

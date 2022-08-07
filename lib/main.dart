@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:scribbly/pages/home.dart';
 import 'package:scribbly/theme.dart';
+import 'package:scribbly/types/novel.dart';
 
 void main() async {
   await Hive.initFlutter();
+
+  Hive.registerAdapter(NovelAdapter());
   await Hive.openBox('settings');
+  await Hive.openBox('library');
+
   runApp(MyApp());
 }
 
