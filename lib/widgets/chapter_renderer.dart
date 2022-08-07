@@ -31,7 +31,7 @@ class ChapterRenderer extends StatelessWidget {
         builder: (context, box, widget) {
           return DefaultTextStyle(
             style: TextStyle(
-              fontFamily: 'Nunito',
+              fontFamily: box.get('fontFamily', defaultValue: 'Nunito'),
               color: Theme.of(context).textTheme.bodyMedium!.color,
               fontSize: box.get('fontSize', defaultValue: 18.0).toDouble(),
             ),

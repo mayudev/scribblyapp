@@ -44,17 +44,22 @@ class ReaderSettings extends StatelessWidget {
           leading: const Icon(Icons.font_download),
           title: const Text('Font'),
           trailing: DropdownButton(
-            onChanged: (val) {},
-            value: 'Nunito',
-            items: const [
-              DropdownMenuItem(
-                value: 'Nunito',
-                child: Text('Nunito'),
-              )
-            ],
+            onChanged: (val) {
+              settings.put('fontFamily', val);
+            },
+            value: settings.get('fontFamily', defaultValue: 'Nunito'),
+            items: _buildDropdownItems(),
           ),
         )
       ]),
     );
+  }
+
+  List<DropdownMenuItem<String>> _buildDropdownItems() {
+    final fonts = ['Nunito', 'PT Sans', 'Roboto Slab', 'Roboto'];
+
+    return fonts
+        .map((e) => DropdownMenuItem(child: Text(e), value: e))
+        .toList();
   }
 }
