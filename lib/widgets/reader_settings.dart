@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class ReaderSettings extends StatelessWidget {
-  const ReaderSettings({Key? key, required this.settings}) : super(key: key);
+  const ReaderSettings({Key? key, required this.settings, required this.reader})
+      : super(key: key);
 
   final Box settings;
+  final bool reader;
 
   @override
   Widget build(BuildContext context) {
@@ -17,11 +19,13 @@ class ReaderSettings extends StatelessWidget {
       child: Column(children: [
         ListTile(
           title: const Text('Reader settings'),
-          trailing: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: const Icon(Icons.close)),
+          trailing: reader
+              ? IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(Icons.close))
+              : null,
         ),
         ListTile(
           leading: const Icon(Icons.text_fields),

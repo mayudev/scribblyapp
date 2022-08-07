@@ -56,8 +56,10 @@ class ReaderPage extends StatelessWidget {
         context: context,
         builder: (builder) => ValueListenableBuilder<Box>(
             valueListenable: Hive.box('settings').listenable(),
-            builder: (context, settings, widget) =>
-                ReaderSettings(settings: settings)));
+            builder: (context, settings, widget) => ReaderSettings(
+                  settings: settings,
+                  reader: true,
+                )));
   }
 
   Widget _renderTitle(Object? data) {

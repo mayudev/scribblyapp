@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:scribbly/widgets/reader_settings.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -21,19 +22,29 @@ class _SettingsPageState extends State<SettingsPage> {
       body: ValueListenableBuilder<Box>(
         valueListenable: Hive.box('settings').listenable(),
         builder: (context, box, widget) {
-          return SettingsList(sections: [
-            SettingsSection(tiles: [
-              SettingsTile.switchTile(
-                initialValue: box.get('darkMode', defaultValue: false),
-                activeSwitchColor: Theme.of(context).colorScheme.primary,
-                onToggle: (newValue) {
-                  box.put('darkMode', newValue);
-                },
-                leading: const Icon(Icons.dark_mode),
-                title: const Text('Dark theme', style: textStyle),
-              ),
-            ])
-          ]);
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SettingsList(
+                  physics: ClampingScrollPhysics(),
+                  shrinkWrap: true,
+                  sections: [
+                    SettingsSection(tiles: [
+                      SettingsTile.switchTile(
+                        initialValue: box.get('darkMode', defaultValue: false),
+                        activeSwitchColor:
+                            Theme.of(context).colorScheme.primary,
+                        onToggle: (newValue) {
+                          box.put('darkMode', newValue);
+                        },
+                        leading: const Icon(Icons.dark_mode),
+                        title: const Text('Dark theme', style: textStyle),
+                      ),
+                    ])
+                  ]),
+              ReaderSettings(settings: box, reader: false)
+            ],
+          );
         },
       ),
     );
