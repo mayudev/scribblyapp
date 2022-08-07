@@ -29,7 +29,6 @@ class ChapterRenderer extends StatelessWidget {
     return ValueListenableBuilder<Box>(
         valueListenable: Hive.box('settings').listenable(),
         builder: (context, box, widget) {
-          print('rebuilding mess');
           return DefaultTextStyle(
             style: TextStyle(
               fontFamily: 'Nunito',
