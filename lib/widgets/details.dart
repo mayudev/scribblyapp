@@ -130,11 +130,16 @@ class _DetailsState extends State<Details> {
 
   void _libraryAdd(LibraryModel library) {
     library.add(widget.data.details);
+
+    ScaffoldMessenger.of(context)
+        .showSnackBar(const SnackBar(content: Text('Novel added to library!')));
   }
 
   void _libraryRemove(LibraryModel library) {
-    print('dl');
     library.remove(widget.data.details);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Novel removed from library!')));
   }
 
   Card _synopsisCard() {

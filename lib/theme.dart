@@ -42,5 +42,9 @@ ThemeData buildDarkTheme() {
       primary: primary,
       secondary: primary,
     ),
+    snackBarTheme: base.snackBarTheme.copyWith(
+      backgroundColor: Colors.black,
+      contentTextStyle: const TextStyle(color: Colors.white),
+    ),
   );
 }
