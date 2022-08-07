@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:scribbly/types/chapter.dart';
 import 'package:scribbly/utils/chapter.dart';
 import 'package:scribbly/widgets/chapter_renderer.dart';
 import 'package:scribbly/widgets/error_screen.dart';
+import 'package:scribbly/widgets/reader_settings.dart';
 
 class ReaderPage extends StatelessWidget {
   const ReaderPage({Key? key, required this.chapter}) : super(key: key);
@@ -24,7 +26,9 @@ class ReaderPage extends StatelessWidget {
                   tooltip: 'Open in web browser',
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    _openSettings(context);
+                  },
                   icon: const Icon(Icons.settings),
                   tooltip: 'Reader settings',
                 )
@@ -45,6 +49,15 @@ class ReaderPage extends StatelessWidget {
             ),
           );
         });
+  }
+
+  Future<void> _openSettings(BuildContext context) {
+    return showModalBottomSheet(
+        context: context,
+        builder: (builder) => ValueListenableBuilder<Box>(
+            valueListenable: Hive.box('settings').listenable(),
+            builder: (context, settings, widget) =>
+                ReaderSettings(settings: settings)));
   }
 
   Widget _renderTitle(Object? data) {

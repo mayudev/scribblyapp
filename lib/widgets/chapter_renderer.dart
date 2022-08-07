@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:universal_html/html.dart' as html;
 
 class ChapterRenderer extends StatelessWidget {
@@ -25,20 +26,25 @@ class ChapterRenderer extends StatelessWidget {
       );
     });
 
-    return DefaultTextStyle(
-      style: TextStyle(
-        fontFamily: 'Nunito',
-        color: Theme.of(context).textTheme.bodyMedium!.color,
-        fontSize: 18.0,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: paragraphs.toList(),
-        ),
-      ),
-    );
+    return ValueListenableBuilder<Box>(
+        valueListenable: Hive.box('settings').listenable(),
+        builder: (context, box, widget) {
+          print('rebuilding mess');
+          return DefaultTextStyle(
+            style: TextStyle(
+              fontFamily: 'Nunito',
+              color: Theme.of(context).textTheme.bodyMedium!.color,
+              fontSize: box.get('fontSize', defaultValue: 18.0).toDouble(),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: paragraphs.toList(),
+              ),
+            ),
+          );
+        });
   }
 }
