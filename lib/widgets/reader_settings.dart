@@ -56,10 +56,16 @@ class ReaderSettings extends StatelessWidget {
   }
 
   List<DropdownMenuItem<String>> _buildDropdownItems() {
-    final fonts = ['Nunito', 'PT Sans', 'Roboto Slab', 'Roboto'];
+    final fonts = [
+      'Nunito',
+      'PT Sans',
+      'Roboto Slab',
+      'Roboto',
+      'Times New Roman',
+    ];
 
     return fonts
-        .map((e) => DropdownMenuItem(child: Text(e), value: e))
+        .map((e) => DropdownMenuItem(value: e, child: Text(e)))
         .toList();
   }
 }
