@@ -13,7 +13,6 @@ class LibraryModel extends ChangeNotifier {
 
   void remove(Novel novel) {
     _novels.removeWhere((element) => element.id == novel.id);
-    print(_novels.length);
     notifyListeners();
   }
 

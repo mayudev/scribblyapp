@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:scribbly/models/prefs.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -14,27 +13,29 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     const textStyle = TextStyle(fontFamily: 'Nunito');
-    var prefs = context.watch<PrefsModel>();
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),
       ),
-      body: SettingsList(sections: [
-        SettingsSection(tiles: [
-          SettingsTile.switchTile(
-            initialValue: prefs.darkMode,
-            activeSwitchColor: Theme.of(context).colorScheme.primary,
-            onToggle: (newValue) {
-              setState(() {
-                prefs.darkMode = !prefs.darkMode;
-              });
-            },
-            leading: const Icon(Icons.dark_mode),
-            title: const Text('Dark theme', style: textStyle),
-          )
-        ])
-      ]),
+      body: ValueListenableBuilder<Box>(
+        valueListenable: Hive.box('settings').listenable(),
+        builder: (context, box, widget) {
+          return SettingsList(sections: [
+            SettingsSection(tiles: [
+              SettingsTile.switchTile(
+                initialValue: box.get('darkMode', defaultValue: false),
+                activeSwitchColor: Theme.of(context).colorScheme.primary,
+                onToggle: (newValue) {
+                  box.put('darkMode', newValue);
+                },
+                leading: const Icon(Icons.dark_mode),
+                title: const Text('Dark theme', style: textStyle),
+              ),
+            ])
+          ]);
+        },
+      ),
     );
   }
 }

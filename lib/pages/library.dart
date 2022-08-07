@@ -8,12 +8,14 @@ class LibraryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<LibraryModel>(
+    return Center(
+        child: Text(
+            'library')); /* Consumer<LibraryModel>(
       builder: (context, value, child) => GridView.count(
           crossAxisCount: 3,
           childAspectRatio: 0.6,
           children:
               value.novels.map((novel) => LibraryCard(data: novel)).toList()),
-    );
+    ); */
   }
 }

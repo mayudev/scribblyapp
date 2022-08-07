@@ -105,7 +105,9 @@ class _DetailsState extends State<Details> {
       children: [
         _buildLibraryButton(),
         OutlinedButton.icon(
-            onPressed: () {},
+            onPressed: () {
+              _pushReader(widget.data.chapters[0]);
+            },
             icon: const Icon(Icons.book),
             label: const Text('Start reading')),
       ],
