@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 ThemeData buildTheme() {
-  const primary = Color(0xff684b77);
-
-  SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(statusBarColor: primary));
+  const primary = Color(0xFF7A50A4);
 
   var base = ThemeData(fontFamily: 'Nunito');
 
@@ -17,9 +14,11 @@ ThemeData buildTheme() {
     ),
     primaryColor: primary,
     appBarTheme: const AppBarTheme().copyWith(
-        backgroundColor: primary,
-        titleTextStyle:
-            const TextStyle(fontWeight: FontWeight.w400, fontSize: 20.0)),
+      systemOverlayStyle: const SystemUiOverlayStyle(
+        statusBarColor: Color(0xFF583A77),
+      ),
+      backgroundColor: primary,
+    ),
   );
 }
 
@@ -41,6 +40,11 @@ ThemeData buildDarkTheme() {
       background: Colors.black,
       primary: primary,
       secondary: primary,
+    ),
+    appBarTheme: const AppBarTheme().copyWith(
+      systemOverlayStyle: const SystemUiOverlayStyle().copyWith(
+        statusBarColor: Colors.black,
+      ),
     ),
     snackBarTheme: base.snackBarTheme.copyWith(
       backgroundColor: Colors.black,
