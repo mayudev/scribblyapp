@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:scribbly/theme.dart';
 import 'package:scribbly/types/novel.dart';
+import 'package:scribbly/widgets/expandable_card.dart';
 
-class DetailsSynopsisCard extends StatelessWidget {
+class DetailsSynopsisCard extends StatefulWidget {
   const DetailsSynopsisCard({Key? key, required this.details})
       : super(key: key);
 
   final NovelDetails details;
 
   @override
+  State<DetailsSynopsisCard> createState() => _DetailsSynopsisCardState();
+}
+
+class _DetailsSynopsisCardState extends State<DetailsSynopsisCard> {
+  bool isExpanded = false;
+
+  @override
   Widget build(BuildContext context) {
+    final description = widget.details.details.trim();
+
     return Card(
       margin: cardMargin,
       child: Column(
@@ -18,9 +28,30 @@ class DetailsSynopsisCard extends StatelessWidget {
           _cardHeading(Icons.info, 'Synopsis'),
           Padding(
             padding: const EdgeInsets.all(12.0),
-            child: SelectableText(
-              details.details.trim(),
-              style: const TextStyle(height: 1.5),
+            child: SizedBox(
+              width: double.infinity,
+              child: ExpandableCardContainer(
+                isExpanded: isExpanded,
+                collapsedChild: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Text(description.length > 512
+                        ? '${description.substring(0, 512)}...'
+                        : description),
+                    TextButton(
+                        onPressed: () {
+                          setState(() {
+                            isExpanded = true;
+                          });
+                        },
+                        child: const Text('Show more'))
+                  ],
+                ),
+                expandedChild: SelectableText(
+                  description,
+                  style: const TextStyle(height: 1.5),
+                ),
+              ),
             ),
           ),
           _cardHeading(Icons.style, 'Genres'),
@@ -62,7 +93,7 @@ class DetailsSynopsisCard extends StatelessWidget {
   }
 
   List<Widget> _genreChips() {
-    return details.genres
+    return widget.details.genres
         .map((genre) => _genreChip(
               label: Text(genre),
             ))
@@ -70,7 +101,7 @@ class DetailsSynopsisCard extends StatelessWidget {
   }
 
   List<Widget> _tagChips() {
-    return details.tags
+    return widget.details.tags
         .map((genre) => _genreChip(
               label: Text(genre),
             ))
