@@ -41,6 +41,7 @@ class ReaderPage extends StatelessWidget {
                 } else if (snapshot.hasData) {
                   final data = snapshot.data as ChapterData;
 
+                  _markRead(data);
                   return _readerPage(context, data);
                 } else {
                   return const Center(child: CircularProgressIndicator());
@@ -60,6 +61,16 @@ class ReaderPage extends StatelessWidget {
                   settings: settings,
                   reader: true,
                 )));
+  }
+
+  void _markRead(ChapterData data) {
+    final box = Hive.box<int>('state');
+
+    final current = box.get(data.novelId);
+
+    if (current == null || current == data.previousChapterId) {
+      box.put(data.novelId, chapter.id);
+    }
   }
 
   Widget _renderTitle(Object? data) {

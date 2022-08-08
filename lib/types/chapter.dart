@@ -17,6 +17,8 @@ class Chapter {
 class ChapterData extends Chapter {
   List<Node> rawContents;
 
+  int novelId;
+
   int? previousChapterId;
   int? nextChapterId;
 
@@ -26,6 +28,7 @@ class ChapterData extends Chapter {
     required super.title,
     required super.publishedDate,
     required this.rawContents,
+    required this.novelId,
     required this.previousChapterId,
     required this.nextChapterId,
   });

@@ -8,6 +8,9 @@ var base = 'https://www.scribblehub.com/read/0/chapter';
 Future getChapter(int chapterId) async {
   final page = await scrapePage('$base/$chapterId');
 
+  final novelLink = page.querySelector('.chp_byauthor a');
+  final novelId = getNovelId(novelLink?.getAttribute('href'));
+
   final title = page.querySelector('.chapter-title')?.text;
   final rawText = page.querySelector('.chp_raw')!;
 
@@ -18,6 +21,7 @@ Future getChapter(int chapterId) async {
 
   return ChapterData(
     id: chapterId,
+    novelId: novelId,
     order: null,
     title: title ?? 'Unknown',
     publishedDate: null,

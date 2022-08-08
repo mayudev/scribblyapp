@@ -105,12 +105,32 @@ class _DetailsState extends State<Details> {
         ValueListenableBuilder<Box>(
             valueListenable: Hive.box('library').listenable(),
             builder: (context, box, widget) => _buildLibraryButton(box)),
-        OutlinedButton.icon(
-            onPressed: () {
-              _pushReader(widget.data.chapters[0]);
-            },
-            icon: const Icon(Icons.book),
-            label: const Text('Start reading')),
+        ValueListenableBuilder<Box<int>>(
+            valueListenable: Hive.box<int>('state').listenable(),
+            builder: (context, box, child) {
+              var state = box.get(widget.data.details.id);
+
+              if (state == null) {
+                return OutlinedButton.icon(
+                    onPressed: () {
+                      _pushReader(widget.data.chapters[0]);
+                    },
+                    icon: const Icon(Icons.book),
+                    label: const Text('Start reading'));
+              } else {
+                return OutlinedButton.icon(
+                    onPressed: () {
+                      final lastChapterIndex = widget.data.chapters
+                          .indexWhere((element) => element.id == state);
+
+                      if (lastChapterIndex + 1 < widget.data.chapters.length) {
+                        _pushReader(widget.data.chapters[lastChapterIndex + 1]);
+                      }
+                    },
+                    icon: const Icon(Icons.book),
+                    label: const Text('Continue reading'));
+              }
+            }),
       ],
     );
   }
@@ -215,34 +235,48 @@ class _DetailsState extends State<Details> {
     );
   }
 
-  Card _chaptersCard() {
-    return Card(
-        margin: cardMargin,
-        child: Column(
-          children: [
-            _cardHeading(Icons.bookmark, 'Chapters', trailing: [
-              IconButton(
-                onPressed: () {
-                  _toggleReverse();
-                },
-                icon: const Icon(Icons.sort),
-                tooltip: 'Toggle reverse',
-              )
-            ]),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const ClampingScrollPhysics(),
-              itemCount: chapterList.length,
-              itemBuilder: (context, index) => ListTile(
-                title: Text(chapterList[index].title ?? 'Unknown'),
-                subtitle: Text(chapterList[index].publishedDate ?? 'Unknown'),
-                onTap: () {
-                  _pushReader(chapterList[index]);
-                },
-              ),
-            )
-          ],
-        ));
+  Widget _chaptersCard() {
+    var box = Hive.box<int>('state').listenable();
+
+    return ValueListenableBuilder<Box<int>>(
+        valueListenable: box,
+        builder: (context, box, child) {
+          var progress = box.get(widget.data.details.id);
+
+          return Card(
+              margin: cardMargin,
+              child: Column(
+                children: [
+                  _cardHeading(Icons.bookmark, 'Chapters', trailing: [
+                    IconButton(
+                      onPressed: () {
+                        _toggleReverse();
+                      },
+                      icon: const Icon(Icons.sort),
+                      tooltip: 'Toggle reverse',
+                    )
+                  ]),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    itemCount: chapterList.length,
+                    itemBuilder: (context, index) => ListTile(
+                      title: Text(chapterList[index].title ?? 'Unknown',
+                          style: TextStyle(
+                              color: (progress == null ||
+                                      progress < chapterList[index].id)
+                                  ? Colors.white
+                                  : Colors.white38)),
+                      subtitle:
+                          Text(chapterList[index].publishedDate ?? 'Unknown'),
+                      onTap: () {
+                        _pushReader(chapterList[index]);
+                      },
+                    ),
+                  )
+                ],
+              ));
+        });
   }
 
   void _toggleReverse() {

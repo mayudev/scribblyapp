@@ -10,6 +10,7 @@ void main() async {
   Hive.registerAdapter(NovelAdapter());
   await Hive.openBox('settings');
   await Hive.openBox('library');
+  await Hive.openBox<int>('state');
 
   runApp(MyApp());
 }
