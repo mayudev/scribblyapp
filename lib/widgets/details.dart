@@ -5,6 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:scribbly/pages/reader.dart';
 import 'package:scribbly/types/chapter.dart';
 import 'package:scribbly/types/novel.dart';
+import 'package:scribbly/utils/read.dart';
 
 const cardMargin = EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0);
 
@@ -260,23 +261,57 @@ class _DetailsState extends State<Details> {
                     shrinkWrap: true,
                     physics: const ClampingScrollPhysics(),
                     itemCount: chapterList.length,
-                    itemBuilder: (context, index) => ListTile(
-                      title: Text(chapterList[index].title ?? 'Unknown',
-                          style: TextStyle(
-                              color: (progress == null ||
-                                      progress < chapterList[index].id)
-                                  ? Colors.white
-                                  : Colors.white38)),
-                      subtitle:
-                          Text(chapterList[index].publishedDate ?? 'Unknown'),
-                      onTap: () {
-                        _pushReader(chapterList[index]);
-                      },
-                    ),
+                    itemBuilder: (context, index) =>
+                        _buildChapterItem(progress, box, index),
                   )
                 ],
               ));
         });
+  }
+
+  Widget _buildChapterItem(int? progress, Box<int> box, int index) {
+    return ListTile(
+      title: Text(chapterList[index].title ?? 'Unknown',
+          style: TextStyle(
+              color: chapterRead(progress, chapterList[index].id)
+                  ? Colors.white38
+                  : Colors.white)),
+      subtitle: Text(chapterList[index].publishedDate ?? 'Unknown'),
+      onTap: () {
+        _pushReader(chapterList[index]);
+      },
+      onLongPress: () {
+        _openChapterItemContextMenu(progress, box, index);
+      },
+    );
+  }
+
+  void _openChapterItemContextMenu(int? progress, Box<int> box, int index) {
+    bool isRead = chapterRead(progress, chapterList[index].id);
+
+    showDialog(
+        context: context,
+        builder: (context) => SimpleDialog(
+              title: Text(chapterList[index].title ?? 'Unknown'),
+              children: [
+                SimpleDialogOption(
+                  onPressed: () {
+                    if (isRead) {
+                      if (index != 0) {
+                        box.put(
+                            widget.data.details.id, chapterList[index - 1].id);
+                      } else {
+                        box.delete(widget.data.details.id);
+                      }
+                    } else {
+                      box.put(widget.data.details.id, chapterList[index].id);
+                    }
+                    Navigator.pop(context);
+                  },
+                  child: Text('Mark as ${isRead ? 'un' : ''}read'),
+                )
+              ],
+            ));
   }
 
   void _toggleReverse() {
