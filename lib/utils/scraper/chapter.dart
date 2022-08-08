@@ -1,5 +1,5 @@
 import 'package:scribbly/types/chapter.dart';
-import 'package:scribbly/utils/scraper.dart';
+import 'package:scribbly/utils/scraper/scraper.dart';
 import 'package:scribbly/utils/util.dart';
 import 'package:universal_html/html.dart';
 

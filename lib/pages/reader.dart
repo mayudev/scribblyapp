@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:scribbly/types/chapter.dart';
-import 'package:scribbly/utils/chapter.dart';
+import 'package:scribbly/utils/scraper/chapter.dart';
 import 'package:scribbly/widgets/chapter_renderer.dart';
 import 'package:scribbly/widgets/error_screen.dart';
 import 'package:scribbly/widgets/reader_settings.dart';

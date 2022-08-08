@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:scribbly/types/chapter.dart';
 import 'package:scribbly/types/novel.dart';
-import 'package:scribbly/utils/chapters.dart';
-import 'package:scribbly/utils/details.dart';
+import 'package:scribbly/utils/scraper/chapters.dart';
+import 'package:scribbly/utils/scraper/details.dart';
 import 'package:scribbly/widgets/novel/details.dart';
 import 'package:scribbly/widgets/error_screen.dart';
 import 'package:url_launcher/url_launcher.dart';

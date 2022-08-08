@@ -1,7 +1,7 @@
 import 'package:scribbly/types/author.dart';
 import 'package:scribbly/types/errors.dart';
 import 'package:scribbly/types/novel.dart';
-import 'package:scribbly/utils/scraper.dart';
+import 'package:scribbly/utils/scraper/scraper.dart';
 import 'package:universal_html/html.dart';
 
 Future<NovelDetails> getNovelDetails(int novelId) async {

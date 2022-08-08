@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scribbly/types/misc.dart';
 import 'package:scribbly/types/novel.dart';
-import 'package:scribbly/utils/search.dart';
+import 'package:scribbly/utils/scraper/search.dart';
 import 'package:scribbly/widgets/error_screen.dart';
 import 'package:scribbly/widgets/result_card.dart';
 
