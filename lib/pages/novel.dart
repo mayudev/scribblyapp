@@ -3,7 +3,7 @@ import 'package:scribbly/types/chapter.dart';
 import 'package:scribbly/types/novel.dart';
 import 'package:scribbly/utils/chapters.dart';
 import 'package:scribbly/utils/details.dart';
-import 'package:scribbly/widgets/details.dart';
+import 'package:scribbly/widgets/novel/details.dart';
 import 'package:scribbly/widgets/error_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 

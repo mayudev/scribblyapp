@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+const cardMargin = EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0);
+
 ThemeData buildTheme() {
   const primary = Color(0xFF7A50A4);
 
