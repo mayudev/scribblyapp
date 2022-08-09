@@ -38,13 +38,14 @@ class _DetailsSynopsisCardState extends State<DetailsSynopsisCard> {
                     Text(description.length > 512
                         ? '${description.substring(0, 512)}...'
                         : description),
-                    TextButton(
-                        onPressed: () {
-                          setState(() {
-                            isExpanded = true;
-                          });
-                        },
-                        child: const Text('Show more'))
+                    if (description.length > 512)
+                      TextButton(
+                          onPressed: () {
+                            setState(() {
+                              isExpanded = true;
+                            });
+                          },
+                          child: const Text('Show more'))
                   ],
                 ),
                 expandedChild: SelectableText(
