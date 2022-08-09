@@ -5,7 +5,7 @@ import 'package:scribbly/utils/scraper/scraper.dart';
 import 'package:universal_html/html.dart';
 
 Future<NovelDetails> getNovelDetails(int novelId) async {
-  final page = await scrapePage(baseUrl + novelId.toString() + '/r/');
+  final page = await scrapePage('$baseUrl$novelId/r/');
 
   final title = page.querySelector('.fic_title');
   final synopsis = page.querySelector('.wi_fic_desc');
