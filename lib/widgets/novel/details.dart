@@ -21,9 +21,22 @@ class Details extends StatefulWidget {
 
 class _DetailsState extends State<Details> {
   bool reversed = false;
+  bool hideRead = false;
 
-  UnmodifiableListView<Chapter> get chapterList => UnmodifiableListView(
-      reversed ? widget.data.chapters.reversed : widget.data.chapters);
+  UnmodifiableListView<Chapter> get chapterList {
+    final list =
+        reversed ? widget.data.chapters.reversed : widget.data.chapters;
+
+    if (hideRead) {
+      var box = Hive.box<int>('state');
+      var progress = box.get(widget.data.details.id);
+
+      return UnmodifiableListView(
+          list.where((element) => !chapterRead(progress, element.id)));
+    } else {
+      return UnmodifiableListView(list);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +72,16 @@ class _DetailsState extends State<Details> {
                     title: const Text('Chapters'),
                     trailing: Wrap(
                       children: [
+                        IconButton(
+                            tooltip: hideRead
+                                ? 'Show read chapters'
+                                : 'Hide read chapters',
+                            onPressed: () {
+                              _toggleHideRead();
+                            },
+                            icon: Icon(hideRead
+                                ? Icons.visibility_off
+                                : Icons.visibility)),
                         IconButton(
                           onPressed: () {
                             _toggleReverse();
@@ -131,6 +154,12 @@ class _DetailsState extends State<Details> {
   void _toggleReverse() {
     setState(() {
       reversed = !reversed;
+    });
+  }
+
+  void _toggleHideRead() {
+    setState(() {
+      hideRead = !hideRead;
     });
   }
 
