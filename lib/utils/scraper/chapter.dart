@@ -14,7 +14,7 @@ Future getChapter(int chapterId) async {
   final title = page.querySelector('.chapter-title')?.text;
   final rawText = page.querySelector('.chp_raw')!;
 
-  final nodes = rawText.childNodes;
+  final elements = rawText.children;
 
   final previousButton = page.querySelector('.btn-prev');
   final nextButton = page.querySelector('.btn-next');
@@ -25,7 +25,7 @@ Future getChapter(int chapterId) async {
     order: null,
     title: title ?? 'Unknown',
     publishedDate: null,
-    rawContents: nodes,
+    rawContents: elements,
     previousChapterId: parseChapterLink(previousButton),
     nextChapterId: parseChapterLink(nextButton),
   );

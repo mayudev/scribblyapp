@@ -1,30 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:scribbly/widgets/chapter/node_renderer.dart';
 import 'package:universal_html/html.dart' as html;
 
 class ChapterRenderer extends StatelessWidget {
   const ChapterRenderer({Key? key, required this.nodes}) : super(key: key);
 
-  final List<html.Node> nodes;
+  final List<html.Element> nodes;
 
   @override
   Widget build(BuildContext context) {
     final paragraphs = nodes
         .where((node) => node.text != null && node.text != '\n')
-        .map((node) {
-      var style = const TextStyle();
-      if (node.firstChild?.nodeName == 'I') {
-        style = const TextStyle(fontStyle: FontStyle.italic);
-      }
-
-      return Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text(
-          node.text!,
-          style: style,
-        ),
-      );
-    });
+        .map((node) => NodeRenderer(node: node));
 
     return ValueListenableBuilder<Box>(
         valueListenable: Hive.box('settings').listenable(),

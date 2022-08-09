@@ -15,7 +15,7 @@ class Chapter {
 }
 
 class ChapterData extends Chapter {
-  List<Node> rawContents;
+  List<Element> rawContents;
 
   int novelId;
 
