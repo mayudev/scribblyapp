@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scribbly/pages/discover.dart';
 import 'package:scribbly/pages/library.dart';
 import 'package:scribbly/pages/novel.dart';
 import 'package:scribbly/pages/search.dart';
@@ -49,10 +50,7 @@ class _HomePageState extends State<HomePage> with RestorationMixin {
   }
 
   List<Widget> _pages() {
-    return [
-      const LibraryPage(),
-      const Text('page 2'),
-    ];
+    return [const LibraryPage(), const DiscoverPage()];
   }
 
   Widget _buildBottomNavigation() {
