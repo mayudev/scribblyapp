@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scribbly/widgets/chapter/author_notes.dart';
+import 'package:scribbly/widgets/chapter/special_element.dart';
 import 'package:universal_html/html.dart' as html;
 
 class NodeRenderer extends StatelessWidget {
@@ -24,7 +24,18 @@ class NodeRenderer extends StatelessWidget {
           break;
         case 'DIV':
           if (firstChild.parent?.className == 'wi_authornotes') {
-            return AuthorNotes(node: node.parent!);
+            return SpecialElement(
+              tag: '.wi_authornotes_body',
+              node: node.parent!,
+              title: const Text("Author's note"),
+              icon: const Icon(Icons.rate_review),
+            );
+          } else if (firstChild.parent?.className == 'wi_news') {
+            return SpecialElement(
+                node: node.parent!,
+                tag: '.wi_news_body',
+                title: const Text('Announcement'),
+                icon: const Icon(Icons.feed));
           }
       }
     }
