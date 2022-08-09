@@ -109,9 +109,11 @@ class _DetailsState extends State<Details> {
                 SimpleDialogOption(
                   onPressed: () {
                     if (isRead) {
-                      if (index != 0) {
-                        box.put(
-                            widget.data.details.id, chapterList[index - 1].id);
+                      final realIndex =
+                          widget.data.chapters.indexOf(chapterList[index]);
+                      if (realIndex != 0) {
+                        box.put(widget.data.details.id,
+                            widget.data.chapters[realIndex - 1].id);
                       } else {
                         box.delete(widget.data.details.id);
                       }
