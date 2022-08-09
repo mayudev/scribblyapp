@@ -1,16 +1,21 @@
-# scribbly
+# ScribblyApp
 
-A new Flutter project.
+![License](https://img.shields.io/github/license/mayudev/scribblyapp)
+![Dart](https://img.shields.io/github/languages/top/mayudev/scribblyapp)
 
-## Getting Started
+A mobile app for novel site [ScribbleHub](https://www.scribblehub.com/) using Flutter.
 
-This project is a starting point for a Flutter application.
+Unofficial - I'm developing this app just for fun. Since it gets data from ScribbleHub through scraping, it might stop working unexpectedly.
 
-A few resources to get you started if this is your first Flutter project:
+## Implemented stuff
+- Trending and latest novels
+- Novel page
+- Library, reading progress
+- Search (basic)
+- Reader (with basic formatting)
+- Light and dark modes
+- Reader font settings
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## License
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+MIT
