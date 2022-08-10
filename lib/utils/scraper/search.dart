@@ -8,17 +8,17 @@ Future<List<NovelResult>> getSearchResults(String query) async {
   final url = 'https://www.scribblehub.com/?s=$query&post_type=fictionposts';
 
   final page = await scrapePage(url);
-  return parseResults(page);
+  return parseSearchResults(page);
 }
 
 Future<List<NovelResult>> getTrending() async {
   const url = 'https://www.scribblehub.com/series-ranking/?sort=5&order=1';
 
   final page = await scrapePage(url);
-  return parseResults(page);
+  return parseSearchResults(page);
 }
 
-List<NovelResult> parseResults(HtmlDocument page) {
+List<NovelResult> parseSearchResults(HtmlDocument page) {
   final results = page.querySelectorAll('.search_main_box');
   return results.map(parseResult).toList();
 }

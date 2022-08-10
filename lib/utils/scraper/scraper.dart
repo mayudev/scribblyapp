@@ -26,3 +26,20 @@ Future<HtmlDocument> scrapeChapterList(String url, int novelId) async {
 
   return parseHtmlDocument(response.body);
 }
+
+// TODO merge into one
+Future<HtmlDocument> scrapeAuthorNovels(int authorId) async {
+  var uri = Uri.parse('https://www.scribblehub.com/wp-admin/admin-ajax.php');
+  var response = await http.post(
+    uri,
+    headers: {'User-Agent': userAgent},
+    body: {
+      'action': 'wi_perseries',
+      'pagenum': '1',
+      'intAuthorID': authorId.toString(),
+      'isMobile': ''
+    },
+  );
+
+  return parseHtmlDocument(response.body);
+}

@@ -21,3 +21,7 @@ int getChapterId(String url) {
 
   return id;
 }
+
+int getAuthorId(String? url) {
+  return getNovelId(url);
+}

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:scribbly/pages/author.dart';
 import 'package:scribbly/theme.dart';
 import 'package:scribbly/types/chapter.dart';
 import 'package:scribbly/types/novel.dart';
+import 'package:scribbly/utils/util.dart';
 
 class DetailsTitleCard extends StatelessWidget {
   const DetailsTitleCard(
@@ -46,11 +48,14 @@ class DetailsTitleCard extends StatelessWidget {
                             fontSize: 20.0,
                           ),
                         ),
-                        Text(
-                          data.details.author.username,
-                          style: const TextStyle(
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.w300,
+                        InkWell(
+                          onTap: () => _showAuthorPage(context),
+                          child: Text(
+                            data.details.author.username,
+                            style: TextStyle(
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.w300,
+                                color: Theme.of(context).colorScheme.secondary),
                           ),
                         ),
                         Text(
@@ -139,5 +144,13 @@ class DetailsTitleCard extends StatelessWidget {
 
     ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Novel removed from library!')));
+  }
+
+  void _showAuthorPage(BuildContext context) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (builder) =>
+                AuthorPage(id: getAuthorId(data.details.author.profileUrl))));
   }
 }
