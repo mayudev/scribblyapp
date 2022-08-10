@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:scribbly/types/novel.dart';
 import 'package:scribbly/widgets/error_screen.dart';
 import 'package:scribbly/widgets/result_card.dart';
