@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scribbly/pages/trending.dart';
 import 'package:scribbly/types/home_page.dart';
 import 'package:scribbly/types/novel.dart';
 import 'package:scribbly/utils/scraper/trending.dart';
@@ -24,7 +25,14 @@ class DiscoverPage extends StatelessWidget {
 
             return ListView(
               children: [
-                const ListTile(title: Text('Trending')),
+                ListTile(
+                  leading: const Icon(Icons.trending_up),
+                  title: const Text('Trending'),
+                  trailing: TextButton.icon(
+                      onPressed: () => _openTrending(context),
+                      icon: const Icon(Icons.more_horiz),
+                      label: const Text('More')),
+                ),
                 _buildGridOf(data.trending),
                 const ListTile(title: Text('Latest')),
                 _buildGridOf(data.latest),
@@ -34,6 +42,11 @@ class DiscoverPage extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
         });
+  }
+
+  void _openTrending(BuildContext context) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const TrendingPage()));
   }
 
   Widget _buildGridOf(List<Novel> novels) {
