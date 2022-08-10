@@ -7,6 +7,13 @@ class NodeRenderer extends StatelessWidget {
 
   final html.Element node;
 
+  Widget _wrap(Widget element) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: element,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     var style = const TextStyle();
@@ -21,6 +28,11 @@ class NodeRenderer extends StatelessWidget {
           break;
         case 'B':
           style = const TextStyle(fontWeight: FontWeight.bold);
+          break;
+        case 'SPAN':
+          if (firstChild.parent?.style.textAlign == 'center') {
+            return _wrap(Center(child: Text(node.text!)));
+          }
           break;
         case 'DIV':
           if (firstChild.parent?.className == 'wi_authornotes') {
@@ -40,9 +52,8 @@ class NodeRenderer extends StatelessWidget {
       }
     }
 
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Text(
+    return _wrap(
+      Text(
         node.text!,
         style: style,
       ),
