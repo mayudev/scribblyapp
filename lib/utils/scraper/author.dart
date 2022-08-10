@@ -23,7 +23,7 @@ String? readBio(Element? container) {
 }
 
 Future<List<NovelResult>> getAuthorNovels(int authorId) async {
-  final list = await scrapeAuthorNovels(authorId);
+  final list = await scrapePost(buildAuthorNovelsRequestBody(authorId));
 
   return parseSearchResults(list);
 }

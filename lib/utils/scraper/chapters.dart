@@ -3,10 +3,8 @@ import 'package:scribbly/utils/scraper/scraper.dart';
 import 'package:scribbly/utils/util.dart';
 import 'package:universal_html/html.dart';
 
-var listUrl = 'https://www.scribblehub.com/wp-admin/admin-ajax.php';
-
 Future<List<Chapter>> getChapterList(int novelId) async {
-  final list = await scrapeChapterList(listUrl, novelId);
+  final list = await scrapePost(buildChapterListRequestBody(novelId));
 
   final chapterElements = list.querySelectorAll('.toc_w').reversed;
   final chapters = parseChapters(chapterElements);
