@@ -25,3 +25,7 @@ int getChapterId(String url) {
 int getAuthorId(String? url) {
   return getNovelId(url);
 }
+
+double calculateFontHeight(int value) {
+  return 1 + value * 0.05;
+}
