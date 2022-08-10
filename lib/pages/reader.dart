@@ -5,6 +5,7 @@ import 'package:scribbly/utils/scraper/chapter.dart';
 import 'package:scribbly/widgets/chapter_renderer.dart';
 import 'package:scribbly/widgets/error_screen.dart';
 import 'package:scribbly/widgets/reader_settings.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ReaderPage extends StatelessWidget {
   const ReaderPage({Key? key, required this.chapter}) : super(key: key);
@@ -21,7 +22,9 @@ class ReaderPage extends StatelessWidget {
               title: _renderTitle(snapshot.data),
               actions: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    _openBrowser();
+                  },
                   icon: const Icon(Icons.public),
                   tooltip: 'Open in web browser',
                 ),
@@ -128,5 +131,10 @@ class ReaderPage extends StatelessWidget {
 
   Future _getChapterData() {
     return getChapter(chapter.id);
+  }
+
+  void _openBrowser() {
+    final url = 'https://www.scribblehub.com/read/a/chapter/${chapter.id}/';
+    launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
   }
 }
