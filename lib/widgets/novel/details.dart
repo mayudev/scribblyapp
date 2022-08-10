@@ -97,20 +97,21 @@ class _DetailsState extends State<Details> {
                     physics: const ClampingScrollPhysics(),
                     itemCount: chapterList.length,
                     itemBuilder: (context, index) =>
-                        _buildChapterItem(progress, box, index),
+                        _buildChapterItem(context, progress, box, index),
                   )
                 ],
               ));
         });
   }
 
-  Widget _buildChapterItem(int? progress, Box<int> box, int index) {
+  Widget _buildChapterItem(
+      BuildContext context, int? progress, Box<int> box, int index) {
     return ListTile(
       title: Text(chapterList[index].title ?? 'Unknown',
           style: TextStyle(
               color: chapterRead(progress, chapterList[index].id)
-                  ? Colors.white38
-                  : Colors.white)),
+                  ? DefaultTextStyle.of(context).style.color!.withOpacity(0.38)
+                  : DefaultTextStyle.of(context).style.color!)),
       subtitle: Text(chapterList[index].publishedDate ?? 'Unknown'),
       onTap: () {
         _pushReader(chapterList[index]);
