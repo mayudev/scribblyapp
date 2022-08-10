@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/widgets.dart';
 import 'package:scribbly/types/home_page.dart';
 import 'package:scribbly/types/novel.dart';
 import 'package:scribbly/utils/scraper/trending.dart';

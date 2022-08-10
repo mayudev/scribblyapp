@@ -4,9 +4,11 @@ import 'package:scribbly/pages/novel.dart';
 import 'package:scribbly/types/novel.dart';
 
 class LibraryCard extends StatelessWidget {
-  const LibraryCard({Key? key, required this.data}) : super(key: key);
+  const LibraryCard({Key? key, required this.data, this.isLibrary = false})
+      : super(key: key);
 
   final Novel data;
+  final bool isLibrary;
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +50,8 @@ class LibraryCard extends StatelessWidget {
   }
 
   void _openActionsDialog(BuildContext context) {
+    if (!isLibrary) return;
+
     showDialog(
         context: context,
         builder: (BuildContext context) => SimpleDialog(

@@ -17,7 +17,10 @@ class LibraryPage extends StatelessWidget {
             crossAxisCount: 3,
             childAspectRatio: 0.6,
             children: libraryMap.entries
-                .map((value) => LibraryCard(data: value.value as Novel))
+                .map((value) => LibraryCard(
+                      data: value.value as Novel,
+                      isLibrary: true,
+                    ))
                 .toList(),
           );
         });
