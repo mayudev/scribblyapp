@@ -28,7 +28,11 @@ class LibraryCard extends StatelessWidget {
                 ),
               ),
             ),
-            Text(data.title)
+            Text(
+              data.title,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+            )
           ],
         ),
       ),
