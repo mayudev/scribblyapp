@@ -98,7 +98,7 @@ class DetailsTitleCard extends StatelessWidget {
                     },
                     icon: const Icon(Icons.book),
                     label: const Text('Start reading'));
-              } else {
+              } else if (state != data.chapters.last.id) {
                 return OutlinedButton.icon(
                     onPressed: () {
                       final lastChapterIndex = data.chapters
@@ -110,6 +110,11 @@ class DetailsTitleCard extends StatelessWidget {
                     },
                     icon: const Icon(Icons.book),
                     label: const Text('Continue reading'));
+              } else {
+                return ElevatedButton.icon(
+                    onPressed: () {},
+                    icon: const Icon(Icons.book),
+                    label: const Text('Nothing to read'));
               }
             }),
       ],
