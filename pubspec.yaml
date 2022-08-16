@@ -67,3 +67,8 @@ flutter:
           weight: 600
         - asset: fonts/RobotoSlab/RobotoSlab-Bold.ttf
           weight: 700
+    - family: Lexend
+      fonts:
+        - asset: fonts/Lexend/Lexend-Regular.ttf
+        - asset: fonts/Lexend/Lexend-Bold.ttf
+          weight: 700

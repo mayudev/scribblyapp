@@ -72,6 +72,7 @@ class ReaderSettings extends StatelessWidget {
 
   List<DropdownMenuItem<String>> _buildDropdownItems() {
     final fonts = [
+      'Lexend',
       'Nunito',
       'PT Sans',
       'Roboto Slab',
